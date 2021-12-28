@@ -1,13 +1,14 @@
 //You can edit ALL of the code here
 //You can edit ALL of the code here
 rootElem = document.getElementById("root");
+
 function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 
   let fild = document.querySelector("#searchFild");
   fild.addEventListener("keyup", searshUp);
-  selectApisode();
+  //selectApisode();
 }
 function searshUp() {
   let fild = document.querySelector("#searchFild");
@@ -28,14 +29,9 @@ function allFilter(episo) {
     return false;
   }
 }
-
-function episodeSelect(episode, index) {
+function episodeSelect(episode) {
   let select = document.querySelector("#selectEpisode");
-  select.options[select.options.length] = new Option(
-    `${displyEpisode(episode)} . ${episode.name}`,
-    episode.name
-  );
-  rootElem.appendChild(select);
+  select.addEventListener("keyup", displyEpisode);
   console.log(episode.value);
 }
 function displyEpisode(episode) {
@@ -50,11 +46,10 @@ function displyEpisode(episode) {
 }
 function makePageForEpisodes(episodeList) {
   rootElem.innerHTML = "";
-
   episodeList.forEach(episodeAll);
 }
 function episodeAll(episode) {
-  let rootElem = document.getElementById("root");
+ let  rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 
   let rootEle = document.createElement("span");
@@ -75,5 +70,4 @@ function episodeAll(episode) {
   summary.innerHTML = episode.summary;
   rootEle.appendChild(summary);
 }
-
-window.onload = setup;
+ window.onload = setup;
