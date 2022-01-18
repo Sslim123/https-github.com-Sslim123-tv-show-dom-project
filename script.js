@@ -1,6 +1,5 @@
 //You can edit ALL of the code here
-//You can edit ALL of the code here
-rootElem = document.getElementById("root");
+let rootElem = document.getElementById("root");
 
 function setup() {
   const allEpisodes = getAllEpisodes();

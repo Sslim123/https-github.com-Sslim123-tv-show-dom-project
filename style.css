@@ -1,6 +1,5 @@
 #root {
   display: flex;
-  /*flex-direction:;*/
   align-items: flex-start;
   flex-direction: row;
   display:  grid;
