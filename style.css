@@ -1,3 +1,50 @@
 #root {
-  color: red;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  display:  grid;
+  width: 1200px;
+  grid-template-columns: auto auto auto;
+  border-color: lightblue;
+
+ }
+ header {
+  text-align: center;
+  position: relative;
+  top: 10px;
+  background-color: black ;
+  height: 80px;
+  color: white;
+  font-size: 2rem;
+
+ }
+span {
+  border-style: solid ;
+  margin : 10px;
+  color:darkslategray ;
+
 }
+h3 {
+  border-style:groove ;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  margin: 40px;
+}
+#searchFild {
+  background-color: none;
+  color: black;
+text-align: center;
+position: relative;
+top: 10px;
+margin-left: 50px;
+height: 30px;
+}
+#selectEpisode {
+  width: 150px;
+  height: 30px;
+  margin-left: 10px;
+  margin-top: 40px;
+  margin-bottom: 0px;
+}
+
