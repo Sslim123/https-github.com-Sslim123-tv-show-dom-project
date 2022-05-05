@@ -1,72 +1,141 @@
-//You can edit ALL of the code here
-let rootElem = document.getElementById("root");
+const rootElem = document.querySelector("#root");
 
-function setup() {
+function setup(setEpisode) {
+  rootElem.textContent = ` Got ${setEpisode.length} episode(s)`;
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
-
-  let fild = document.querySelector("#searchFild");
-  fild.addEventListener("keyup", searshUp);
-  //selectApisode();
+  let input = document.getElementById("searchFor");
+  input.addEventListener("keyup", searchForAll);
+  fetchData();
 }
-function searshUp() {
-  let fild = document.querySelector("#searchFild");
-  console.log(fild.value);
 
+function searchForAll() {
   const allEpisodes = getAllEpisodes();
-  let allFiltered = allEpisodes.filter(allFilter);
-  makePageForEpisodes(allFiltered);
+  let filterEpisode = allEpisodes.filter(myEpisode);
+  makePageForEpisodes(filterEpisode);
 }
 
-function allFilter(episo) {
-  let fild = document.querySelector("#searchFild");
-  console.log(fild.value);
-
-  if (episo.name.toLowerCase().includes(fild.value.toLowerCase())) {
+//this is input for searching in the all episode tv - show
+function myEpisode(episo) {
+  let input = document.getElementById("searchFor");
+  rootElem.innerHTML = "";
+  if (episo.name.toLowerCase().includes(input.value.toLowerCase())) {
+    return true;
+  } else if (episo.summary.toLowerCase().includes(input.value.toLowerCase())) {
     return true;
   } else {
     return false;
   }
 }
-function episodeSelect(episode) {
-  let select = document.querySelector("#selectEpisode");
-  select.addEventListener("keyup", displyEpisode);
-  console.log(episode.value);
+
+function makePageForEpisodes(episodeList) {
+  rootElem.textContent = ` displaying (  ${episodeList.length}) episode(s)`;
+  const sorted = episodeList.sort(sortedByName);
+  console.log(sorted);
+
+  episodeList.forEach(callBack);
 }
-function displyEpisode(episode) {
-  if (episode > 10) {
-    return (
-      episode.season.toString().padStart(3, S0) +
-      episode.number.toString().padStart(3, E0)
-    );
+
+function sortedByName(a, b) {
+  if (a.season > b.season) {
+    return -1;
+  } else if (b.season > a.season) {
+    return 1;
   } else {
-    return `S0${episode.season} . E0${episode.number}`;
+    return 0;
   }
 }
-function makePageForEpisodes(episodeList) {
-  rootElem.innerHTML = "";
-  episodeList.forEach(episodeAll);
-}
-function episodeAll(episode) {
- let  rootElem = document.getElementById("root");
-  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+// here is the function that content all the elements  created with dom
 
-  let rootEle = document.createElement("span");
-  rootElem.appendChild(rootEle);
+function callBack(episode) {
+  let newRoot = document.createElement("card");
+  rootElem.appendChild(newRoot);
 
-  let h3 = document.createElement("h3");
-  h3.innerText = episode.name;
-  rootEle.appendChild(h3);
-  let numberCode = document.createElement("h4");
-  numberCode.innerText = "S0" + episode.number + "E0" + episode.season;
-  rootEle.appendChild(numberCode);
+  function padNumber(numberPad) {
+    return numberPad.toString().padStart(2, "0");
+  }
 
-  let image = document.createElement("img");
-  rootEle.appendChild(image);
-  image.src = episode.image.medium;
+  let seasonCode =
+    "S" + padNumber(episode.season) + "E" + padNumber(episode.number);
+  let h2 = document.createElement("h3");
+  newRoot.appendChild(h2);
+  h2.innerText = episode.name + " - " + seasonCode;
 
-  let summary = document.createElement("summary");
+  let img = document.createElement("img");
+  newRoot.appendChild(img);
+  img.src = episode.image.medium;
+
+  let summary = document.createElement("p");
+  newRoot.appendChild(summary);
   summary.innerHTML = episode.summary;
-  rootEle.appendChild(summary);
+
+  //select  from dropdown option menue by the name of episode
+
+  let menue = document.getElementById("selectMenue");
+  let optionAll = document.createElement("option");
+  optionAll.innerHTML = episode.name;
+  menue.appendChild(optionAll);
+
+  let selectinput = document.getElementById("mb3");
+  let optionSelect = document.createElement("option");
+  optionSelect.innerHTML = episode.name + "  - " + seasonCode;
+  selectinput.appendChild(optionSelect);
+
+  menue.addEventListener(
+    "change",
+    () => {
+      let option = document.getElementById("selectMenue").value;
+      console.log(option);
+
+      if (option === "") {
+        const allEpisodes = getAllEpisodes();
+        let filterEpisode = allEpisodes.filter(checkTitle(option));
+        makePageForEpisodes(filterEpisode);
+      }
+
+      function checkTitle(episode, option) {
+        console.log(episode);
+        rootElem.innerHTML = " ";
+        if (episode.name.toLowerCase().includes(option.toLowerCase())) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    true
+  );
+
+  menue.onchange = function () {
+    const root = menue.options[menue.selectedIndex].text;
+    document.getElementById("inputSelect").value = root;
+    console.log(root);
+
+    document.body.style.backgroundColor = "blue";
+  };
 }
- window.onload = setup;
+const api_url = "https://api.tvmaze.com/shows/82";
+
+async function fetchData() {
+  const response = await fetch(api_url);
+  const data = await response.json();
+  console.log(data);
+  const { name, image, url } = data;
+  console.log(name);
+  console.log(image);
+  console.log(url);
+
+  const newData = document.createElement("card");
+
+  rootElem.appendChild(newData);
+  const newDat = document.createElement("h3");
+  newData.appendChild(newDat);
+
+  newDat.textContent = name;
+
+  const newImg = document.createElement("img");
+  newData.appendChild(newImg);
+  newImg.src = image.medium;
+}
+
+window.onload = setup;
