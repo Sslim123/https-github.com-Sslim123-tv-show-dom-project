@@ -6,6 +6,7 @@ function setup(setEpisode) {
   makePageForEpisodes(allEpisodes);
   let input = document.getElementById("searchFor");
   input.addEventListener("keyup", searchForAll);
+
   fetchData();
 }
 
@@ -21,18 +22,18 @@ function myEpisode(episo) {
   rootElem.innerHTML = "";
   if (episo.name.toLowerCase().includes(input.value.toLowerCase())) {
     return true;
-  } else if (episo.summary.toLowerCase().includes(input.value.toLowerCase())) {
-    return true;
   } else {
     return false;
   }
 }
 
 function makePageForEpisodes(episodeList) {
-  rootElem.textContent = ` displaying (  ${episodeList.length}) episode(s)`;
+  let episodeLength = document.createElement("h6");
+  episodeLength.textContent = `display (${episodeList.length}) episode(s)`;
+  rootElem.appendChild(episodeLength);
+
   const sorted = episodeList.sort(sortedByName);
   console.log(sorted);
-
   episodeList.forEach(callBack);
 }
 
@@ -81,30 +82,26 @@ function callBack(episode) {
   optionSelect.innerHTML = episode.name + "  - " + seasonCode;
   selectinput.appendChild(optionSelect);
 
-  menue.addEventListener(
-    "change",
-    () => {
-      let option = document.getElementById("selectMenue").value;
-      console.log(option);
+  menue.addEventListener("change", () => {
+    let option = document.getElementById("selectMenue").value;
+    console.log(option);
 
-      if (option === "") {
-        const allEpisodes = getAllEpisodes();
-        let filterEpisode = allEpisodes.filter(checkTitle(option));
-        makePageForEpisodes(filterEpisode);
-      }
+    if (option !== "") {
+      const allEpisodes = getAllEpisodes();
+      let filterEpisode = allEpisodes.filter(checkTitle);
+      makePageForEpisodes(filterEpisode);
+    }
 
-      function checkTitle(episode, option) {
-        console.log(episode);
-        rootElem.innerHTML = " ";
-        if (episode.name.toLowerCase().includes(option.toLowerCase())) {
-          return true;
-        } else {
-          return false;
-        }
+    function checkTitle(episode) {
+      console.log(episode);
+      rootElem.innerHTML = " ";
+      if (episode.name.includes(option)) {
+        return true;
+      } else {
+        return false;
       }
-    },
-    true
-  );
+    }
+  });
 
   menue.onchange = function () {
     const root = menue.options[menue.selectedIndex].text;
@@ -131,7 +128,7 @@ async function fetchData() {
   const newDat = document.createElement("h3");
   newData.appendChild(newDat);
 
-  newDat.textContent = name;
+  newDat.innerHTML = name;
 
   const newImg = document.createElement("img");
   newData.appendChild(newImg);
