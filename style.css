@@ -4,6 +4,7 @@
 }
 
 body {
+  font-style: italic;
   font-family: "Mulish", sans-serif;
   font-family: "Pontano Sans", sans-serif;
 }
@@ -23,11 +24,10 @@ header::after {
   font-size: 2rem;
   width: 20px;
   height: 100%;
-  animation: blinkCursor 9s steps(10) infinite;
+  animation: blinkCursor 15s steps(10) infinite;
 }
 
 @keyframes blinkCursor {
-
   40%,
   65% {
     opacity: 1;
@@ -42,13 +42,12 @@ header::after {
 header h1 {
   letter-spacing: 1rem;
   text-transform: uppercase;
-  animation: typing 7s steps(16) infinite;
+  animation: typing 14s steps(8) infinite;
   overflow: visible;
 }
 
 @keyframes typing {
-
-  1%,
+  10%,
   90% {
     width: 20px;
   }
@@ -61,7 +60,6 @@ header h1 {
 h1 {
   display: flex;
   justify-content: center;
-  font-style: italic;
   font-size: 2rem;
   color: hsla(91, 41%, 43%, 0.956);
   font-weight: bolder;
@@ -71,11 +69,11 @@ h1 {
 
 h6 {
   position: absolute;
-  background-color: brown;
+  background-color: aqua;
   width: 210px;
   height: 60px;
   font-size: 1.3rem;
-  color: antiquewhite;
+  color: black;
   right: 10px;
   top: 20px;
   border-radius: 0.5rem;
@@ -89,7 +87,7 @@ span {
 /* id hold the all search input*/
 #for-select {
   margin-top: 80px;
-  border-radius: 0.5rem;
+  border-radius: 0.9rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -98,7 +96,6 @@ span {
 
 /*<!--search for episode by header of card -->*/
 #searchFor {
-  font-style: italic;
   font-size: 1.5rem;
   background-color: black;
   color: white;
@@ -114,27 +111,26 @@ span {
   background-color: black;
   color: white;
   position: relative;
-  border-radius: 0.5rem;
-  font-style: italic;
+  border-radius: 0.9rem;
   font-size: 1.5rem;
 }
 
-#mb31 {
+input {
+  border-radius: 0.7em;
+}
+
+#mb3 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 150px;
   height: 90px;
-  font-style: italic;
-  font-size: 1.5rem;
-}
-
-#mb3 {
   background-color: black;
   color: azure;
   width: 800px;
   text-align: center;
   font-size: 1.5rem;
+  border-radius: 0.9em;
 }
 
 #root:hover {

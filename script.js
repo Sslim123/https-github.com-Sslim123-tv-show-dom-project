@@ -1,12 +1,11 @@
 const rootElem = document.querySelector("#root");
+//var  h6 = document.createElement("h3");
 
 function setup(setEpisode) {
-  rootElem.textContent = ` Got ${setEpisode.length} episode(s)`;
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
   let input = document.getElementById("searchFor");
   input.addEventListener("keyup", searchForAll);
-
   fetchData();
 }
 
@@ -29,11 +28,11 @@ function myEpisode(episo) {
 
 function makePageForEpisodes(episodeList) {
   let episodeLength = document.createElement("h6");
-  episodeLength.textContent = `display (${episodeList.length}) episode(s)`;
+  episodeLength.textContent = `displaying (${episodeList.length} / 73) episodes`;
   rootElem.appendChild(episodeLength);
 
   const sorted = episodeList.sort(sortedByName);
-  console.log(sorted);
+  //console.log(sorted);
   episodeList.forEach(callBack);
 }
 
@@ -47,29 +46,34 @@ function sortedByName(a, b) {
   }
 }
 // here is the function that content all the elements  created with dom
+let h2;//= document.createElement("h3");
+let seasonCode;
+function padNumber(numberPad) {
+  return numberPad.toString().padStart(2, "0");
+}
 
 function callBack(episode) {
+  seasonCode =
+    "S" + padNumber(episode.season) + "E" + padNumber(episode.number);
   let newRoot = document.createElement("card");
   rootElem.appendChild(newRoot);
 
-  function padNumber(numberPad) {
-    return numberPad.toString().padStart(2, "0");
-  }
 
-  let seasonCode =
-    "S" + padNumber(episode.season) + "E" + padNumber(episode.number);
-  let h2 = document.createElement("h3");
+  h2 = document.createElement("h3");
+  h2.innerHTML = episode.name + " - " + seasonCode;
   newRoot.appendChild(h2);
-  h2.innerText = episode.name + " - " + seasonCode;
-
   let img = document.createElement("img");
   newRoot.appendChild(img);
   img.src = episode.image.medium;
 
+  let lia = document.createElement("a");
+  newRoot.appendChild(lia);
+  lia.href = episode.url //
+  lia.innerText = "You Can watch this episode";
+
   let summary = document.createElement("p");
   newRoot.appendChild(summary);
   summary.innerHTML = episode.summary;
-
   //select  from dropdown option menue by the name of episode
 
   let menue = document.getElementById("selectMenue");
@@ -77,59 +81,39 @@ function callBack(episode) {
   optionAll.innerHTML = episode.name;
   menue.appendChild(optionAll);
 
-  let selectinput = document.getElementById("mb3");
-  let optionSelect = document.createElement("option");
-  optionSelect.innerHTML = episode.name + "  - " + seasonCode;
-  selectinput.appendChild(optionSelect);
-
   menue.addEventListener("change", () => {
     let option = document.getElementById("selectMenue").value;
-    console.log(option);
 
     if (option !== "") {
       const allEpisodes = getAllEpisodes();
       let filterEpisode = allEpisodes.filter(checkTitle);
       makePageForEpisodes(filterEpisode);
+      checkTitle();
     }
-
     function checkTitle(episode) {
-      console.log(episode);
+console.log(episode.name);
       rootElem.innerHTML = " ";
-      if (episode.name.includes(option)) {
+      if(episode.name == option) {
         return true;
       } else {
         return false;
       }
-    }
-  });
-
-  menue.onchange = function () {
-    const root = menue.options[menue.selectedIndex].text;
-    document.getElementById("inputSelect").value = root;
-    console.log(root);
-
-    document.body.style.backgroundColor = "blue";
-  };
+    };
+});
 }
-const api_url = "https://api.tvmaze.com/shows/82";
+
+const api_url = "https://api.tvmaze.com/shows/179";
 
 async function fetchData() {
   const response = await fetch(api_url);
   const data = await response.json();
-  console.log(data);
+  //console.log(data);
   const { name, image, url } = data;
-  console.log(name);
-  console.log(image);
-  console.log(url);
-
   const newData = document.createElement("card");
-
   rootElem.appendChild(newData);
   const newDat = document.createElement("h3");
   newData.appendChild(newDat);
-
   newDat.innerHTML = name;
-
   const newImg = document.createElement("img");
   newData.appendChild(newImg);
   newImg.src = image.medium;
