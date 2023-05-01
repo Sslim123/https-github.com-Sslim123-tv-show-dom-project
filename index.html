@@ -19,21 +19,30 @@
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
+
   <body>
     <header id="main-header">
-      <h1 id="show"><span> TV show for </span>- all episodes</h1>
+      <h5>Tv-Show</h5>
+      <div id="inputAndSelect">
+        <input id="search-input" placeholder="search of series" />
+
+        <select id="selectFromMenu">
+          select
+        </select>
+      </div>
     </header>
-
-    <div id="for-select">
-      <input id="searchFor" placeholder="search" />
-
-      <select id="selectMenue">
-        select
-      </select>
-
-    </div>
+    <h1 id="show"><span> TV show for </span>- all episodes</h1>
 
     <div id="root"></div>
+    <div class="card text-center">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <h5 class="card-title">TV SHOW</h5>
+        <section class="card-text">We offer what Your looking for .</section>
+        <a href="#main-header" class="btn btn-primary">Back to search</a>
+      </div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 

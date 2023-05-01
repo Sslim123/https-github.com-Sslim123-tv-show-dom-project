@@ -1,10 +1,9 @@
 const rootElem = document.querySelector("#root");
-//var  h6 = document.createElement("h3");
 
 function setup(setEpisode) {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
-  let input = document.getElementById("searchFor");
+  let input = document.getElementById("search-input");
   input.addEventListener("keyup", searchForAll);
   fetchData();
 }
@@ -17,7 +16,7 @@ function searchForAll() {
 
 //this is input for searching in the all episode tv - show
 function myEpisode(episo) {
-  let input = document.getElementById("searchFor");
+  let input = document.getElementById("search-input");
   rootElem.innerHTML = "";
   if (episo.name.toLowerCase().includes(input.value.toLowerCase())) {
     return true;
@@ -46,7 +45,7 @@ function sortedByName(a, b) {
   }
 }
 // here is the function that content all the elements  created with dom
-let h2;//= document.createElement("h3");
+let h2; //= document.createElement("h3");
 let seasonCode;
 function padNumber(numberPad) {
   return numberPad.toString().padStart(2, "0");
@@ -58,7 +57,6 @@ function callBack(episode) {
   let newRoot = document.createElement("card");
   rootElem.appendChild(newRoot);
 
-
   h2 = document.createElement("h3");
   h2.innerHTML = episode.name + " - " + seasonCode;
   newRoot.appendChild(h2);
@@ -68,38 +66,36 @@ function callBack(episode) {
 
   let lia = document.createElement("a");
   newRoot.appendChild(lia);
-  lia.href = episode.url //
+  lia.href = episode.url; //
   lia.innerText = "You Can watch this episode";
 
   let summary = document.createElement("p");
   newRoot.appendChild(summary);
   summary.innerHTML = episode.summary;
-  //select  from dropdown option menue by the name of episode
+  //select  from dropdown option menu by the name of episode
 
-  let menue = document.getElementById("selectMenue");
+  let menu = document.getElementById("selectFromMenu");
   let optionAll = document.createElement("option");
   optionAll.innerHTML = episode.name;
-  menue.appendChild(optionAll);
+  menu.appendChild(optionAll);
 
-  menue.addEventListener("change", () => {
-    let option = document.getElementById("selectMenue").value;
+  menu.addEventListener("change", () => {
+    let option = document.getElementById("selectFromMenu").value;
 
     if (option !== "") {
       const allEpisodes = getAllEpisodes();
       let filterEpisode = allEpisodes.filter(checkTitle);
       makePageForEpisodes(filterEpisode);
-      checkTitle();
     }
     function checkTitle(episode) {
-console.log(episode.name);
-      rootElem.innerHTML = " ";
-      if(episode.name == option) {
+      rootElem.innerHTML = "";
+      if (episode.name == option) {
         return true;
       } else {
         return false;
       }
-    };
-});
+    }
+  });
 }
 
 const api_url = "https://api.tvmaze.com/shows/179";
