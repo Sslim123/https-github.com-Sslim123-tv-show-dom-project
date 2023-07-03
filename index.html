@@ -17,27 +17,38 @@
       crossorigin="anonymous"
     />
     <link href="style.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
     <header id="main-header">
-      <h5>Tv-Show</h5>
+      <div class="img-holder" data-aos="fade-right" data-aos-duration="3000">
+        <!-- <img src="TV-SHOWS.png" alt="SHOWS" /> -->
+        <div class="logo">TV-SHOWS</div>
+      </div>
       <div id="inputAndSelect">
-        <input id="search-input" placeholder="search of series" />
+        <input
+          id="search-input"
+          placeholder="search of series"
+          data-aos="fade-right"
+          data-aos-duration="2000"
+        />
 
-        <select id="selectFromMenu">
-          select
-        </select>
+        <select
+          id="selectFromMenu"
+          data-aos="fade-left"
+          data-aos-duration="2000"
+        ></select>
       </div>
     </header>
-    <h1 id="show"><span> TV show for </span>- all episodes</h1>
+    <h1 id="show">TV show for - all episodes</h1>
 
-    <div id="root"></div>
-    <div class="card text-center">
+    <section class="section"></section>
+    <div id="root" data-aos="fade-down" data-aos-duration="2000"></div>
+    <div class="card text-center" data-aos="fade-left, zoom-in">
       <div class="card-header"></div>
       <div class="card-body">
-        <h5 class="card-title">TV SHOW</h5>
         <section class="card-text">We offer what Your looking for .</section>
         <a href="#main-header" class="btn btn-primary">Back to search</a>
       </div>
@@ -48,5 +59,9 @@
 
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>
